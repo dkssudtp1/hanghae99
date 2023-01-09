@@ -1,7 +1,7 @@
 from flask import Flask, render_template, jsonify
 from user import sign_in, sign_up
 from my_place import my_place_list_get, my_place_post, my_place_delete
-from random_palce import random_place_get
+from random_place import random_place_get, random_place_post
 
 app = Flask(__name__)
 
@@ -68,4 +68,4 @@ def random_place_get_api():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5500, debug=True)
+    app.run('0.0.0.0', port=5000, debug=True)
