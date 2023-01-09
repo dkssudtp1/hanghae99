@@ -3,7 +3,7 @@ from db import db
 
 
 
-def my_place_list_get_api():
+def my_place_list_get():
     place_list = list(db.place.find({}, {'_id': False}))
 
     return jsonify({'place_list': place_list})
@@ -11,7 +11,7 @@ def my_place_list_get_api():
 def my_place_delete():
     num_receive = request.form['num_give']
 
-    db.place.delete_one({'num':num_recieve})
+    db.place.delete_one({'num':num_receive})
 
     return jsonify({'msg': '삭제 완료'})
 
