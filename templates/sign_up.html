@@ -3,8 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
+    <style>
+        .SingUp {
+            width: 95%;
+            max-width: 500px;
+            margin: 20px auto 0px auto;
+
+            box-shadow: 0px 0px 3px 0px black;
+            padding: 30px;
+
+        }
+
+        .SingUp > button {
+            margin-top: 20px;
+        }
+
+    </style>
+
 </head>
 <body>
-sign_up
+    <div class="SingUp">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">username</span>
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                   aria-describedby="basic-addon1">
+        </div>
+
+        <div class="form-floating">
+            <label for="floatingPassword">password</label>
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Username" aria-label="Username">
+            <span class="input-group-text">@</span>
+            <input type="text" class="form-control" placeholder="Server" aria-label="Server">
+        </div>
+
+
+
+        <button type="button" class="btn btn-dark">Sign up</button>
+
+    </div>
 </body>
 </html>
