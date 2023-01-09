@@ -65,6 +65,7 @@ def my_place_post_api():
 def random_place_get_api():
   place = random_place_get()
   return place
+
 @app.route('/api/random_place', methods=["POST"])
 def random_place_post_api():
   place = random_place_post()
@@ -72,4 +73,4 @@ def random_place_post_api():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=5500, debug=True)
