@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-  print('test')
+  print('1111')
   return render_template('index.html')
 
 # 로그인 html rendering
