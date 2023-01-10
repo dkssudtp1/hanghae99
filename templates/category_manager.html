@@ -60,6 +60,21 @@
                 margin: auto;
             }
 
+            table{
+                width: 500px;
+            }
+            td {
+                width: 100px;
+                height: 50px;
+                text-align: center;
+                vertical-align : middle;
+            }
+            .category_input_text{
+                width: 100px;
+                height: 50px;
+                text-align: center;
+                vertical-align : middle;
+            }
 
         </style>
         <script>
@@ -79,42 +94,6 @@
                 })
             }
 
-            function suggest_place() {
-                category = $("#suggest-place-category").val();
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/random_place',
-                    data: {category_give : category},
-                    success: function (response) {
-                        if(response === "null"){
-                            let temp_html = `<div class="card">
-                                                <div class="card-body">
-                                                    <blockquote class="blockquote mb-0">
-                                                        <footer class="blockquote-footer">맛집이 없습니다.</footer>
-                                                    </blockquote>
-                                                </div>
-                                             </div>`
-                            $('#comment-list').empty();
-                            $('#comment-list').append(temp_html);
-                        }
-                        else {
-                            let row = response['food']
-                            let temp_html = `<div class="card">
-                                                <div class="card-body">
-                                                    <p>${row.title}</p>
-                                                    <blockquote class="blockquote mb-0">
-                                                        <footer class="blockquote-footer">${row.content}</footer>
-                                                    </blockquote>
-                                                </div>
-                                             </div>`
-
-                            $('#comment-list').empty();
-                            $('#comment-list').append(temp_html);
-                        }
-                    }
-                });
-            }
 
             function get_category() {
                 $.ajax({
@@ -125,31 +104,86 @@
                         let rows = response['category_List'];
 
                         for(let i = 0; i < rows.length; i++) {
-                            let category = rows[i]
-                            $("#suggest-place-category").append(`<option value="${category.num}">${category.name}</option>`);
+                            let category = rows[i];
+                            let tmphtml = `<tr id="${category.num}">
+                                                <td>${i+1}</td>
+                                                <td><input class="category_input_text" type="text" value="${category.name}"/></td>
+                                                <td>
+                                                    <button button type="button" class="btn btn-primary" onclick="modify_category(${category.num})">수정</button>
+                                                    <button button type="button" class="btn btn-danger" onclick="remove_category(${category.num})">삭제</button>
+                                                </td>
+                                           </tr>`
+                            $("#category-tbody").append(tmphtml);
                         }
                     }
                 });
             }
+
+            function add_category(){
+                input_category = $("#input-category").val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/category',
+                    data: {category_name : input_category},
+                    success: function (response) {
+                        if(response === "duple")
+                            alert("중복값을 넣을수 없습니다.");
+                        if(response === "ok")
+                            location.reload();
+                    }
+                });
+            }
+
+            function remove_category(num){
+                var result = confirm("정말로 삭제합니까?");
+
+                if(result) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/api/category',
+                        data: {category_num: num},
+                        success: function (response) {
+                            if (response === "ok") {
+                                alert("삭제가 완료 되었습니다.");
+                                location.reload();
+                            }
+                            else{
+                                alert("삭제 도중 오류가 발생하였습니다");
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            }
+
         </script>
     </head>
     <body>
         <div class="header">
             <h1>뭐 먹지?</h1>
             <p>현재기온: <span id="temp">36</span>도</p>
-            <div>
-                <button onclick="location.href='sign_in.html'" type="button" class="btn btn-light">로그아웃</button>
-                <button onclick="location.href='my_place.html'" type="button" class="btn btn-light">등록하기</button>
-            </div>
-
         </div>
         <div class="mypost">
-            <p id="category">카테고리
-                <select id="suggest-place-category" class="form-select form-select-lg mb-3" className="form-select">
-                    <option value="0" selected>전체</option>
-                </select>
-            </p>
-            <button onclick="suggest_place()" type="button" class="btn btn-dark">추천해줘</button>
+            <h3>카테고리 관리</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td colspan="2">
+                            <input type="text" id="input-category" class="form-control" placeholder="카테고리 입력">
+                        </td>
+                        <td>
+                            <button button type="button" class="btn btn-success" onclick="add_category()">추가</button>
+                        </td>
+                    </tr>
+                    <tr style="height: 20px">
+                        <td>번호</td>
+                        <td>카테고리</td>
+                        <td>관리</td>
+                    </tr>
+                </thead>
+                <tbody id="category-tbody"></tbody>
+            </table>
         </div>
         <div class="mycards" id="comment-list"></div>
     </body>

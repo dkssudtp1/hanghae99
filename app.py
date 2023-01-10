@@ -1,7 +1,7 @@
 from flask import Flask, render_template, jsonify
 from user import sign_in, sign_up
 from my_place import my_place_list_get, my_place_post, my_place_delete
-from random_place import random_place_get, random_place_post
+from random_place import random_place_post
 from category import  category_post, category_delete, category_list_get
 
 app = Flask(__name__)
@@ -31,6 +31,10 @@ def random_place_render():
 def my_place_render():
   return render_template('my_place.html')
 
+#카테고리 관리
+@app.route('/category')
+def category_render():
+  return render_template('category_manager.html')
 
 # 회원가입 api
 @app.route('/api/sign_up', methods=["POST"])
@@ -63,35 +67,24 @@ def my_place_post_api():
   return msg
 
 # 랜덤 장소 조회 api
-@app.route('/api/random_place', methods=["GET"])
-def random_place_get_api():
-  place = random_place_get()
-  return place
-
 @app.route('/api/random_place', methods=["POST"])
 def random_place_post_api():
-  place = random_place_post()
-  return place
-
+  return random_place_post()
 
 # 카테고리 목록 api
 @app.route('/api/category', methods=["GET"])
 def category_list_get_api():
-  category_list = category_list_get()
-  print(category_list)
-  return category_list
+  return category_list_get()
 
 # 카테고리 삭제 api
 @app.route('/api/category', methods=["DELETE"])
 def category_delete_api():
-  msg = category_delete()
-  return msg
+  return category_delete()
 
 # 장소 등록 api
 @app.route('/api/category', methods=["POST"])
 def category_post_api():
-  msg = category_post()
-  return msg
+  return category_post()
 
 if __name__ == '__main__':
   app.run('0.0.0.0', port=5500, debug=True)
