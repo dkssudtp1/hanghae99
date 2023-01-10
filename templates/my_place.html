@@ -79,28 +79,6 @@
                 })
             }
 
-            function food_suggest() {
-                category = $("#suggest-food-category").val();
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/random_place',
-                    data: {category_give : category},
-                    success: function (response) {
-                        let row = response['food']
-                        let temp_html = `<div class="card">
-                                            <div class="card-body">
-                                                <p>${row.title}</p>
-                                                <blockquote class="blockquote mb-0">
-                                                    <footer class="blockquote-footer">${row.content}</footer>
-                                                </blockquote>
-                                            </div>
-                                         </div>`
-
-                        $('#comment-list').empty();
-                        $('#comment-list').append(temp_html);
-                    }
-                });
-            }
 
             function get_food_category() {
                 $.ajax({
@@ -126,13 +104,12 @@
 
             <div>
                 <button onclick="location.href='sign_in.html'" type="button" class="btn btn-light">로그아웃</button>
-                <button onclick="location.href='index.html'" type="button" class="btn btn-light">맛집목록</button>
                 <button onclick="location.href='random_place.html'" type="button" class="btn btn-light">추천하기</button>
             </div>
 
         </div>
 
-        <div class="mypost">
+        <div class="update">
 
             <div class="form-floating">
                 <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
@@ -157,6 +134,11 @@
                     <option value="1">한식</option>
                     <option value="2">중식</option>
                     <option value="3">일식</option>
+                    <option value="4">양식</option>
+                    <option value="5">택국음식</option>
+                    <option value="5">인도음식</option>
+
+
                 </select>
             </div>
 
@@ -174,6 +156,8 @@
             <button onclick="location.href='index.html'" type="button" class="btn btn-dark">취소</button>
 
         </div>
+
         <div class="mycards" id="comment-list"></div>
+
     </body>
 </html>
