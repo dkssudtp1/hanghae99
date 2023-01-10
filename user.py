@@ -34,7 +34,7 @@ def sign_up():
 
         last_user_num = user_list[-1]['num'] if len(user_list) > 0 else 1
 
-        db.place.insert_one({"num": last_user_num + 1, "id": id_receive, "password": password_receive, "nickname": nickname_receive})
+        db.users.insert_one({"num": last_user_num + 1, "id": id_receive, "password": password_receive, "nickname": nickname_receive, "admin": False})
 
         return jsonify({'msg': '회원가입 완료'})
 
