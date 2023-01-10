@@ -25,7 +25,7 @@ def my_place_list_get():
             },
         },
         {
-            '$match': {'category.num': int(category_num), 'user.num': int(user_num)}
+            '$match': {'category.num': int(category_num)}
         },
         {
             '$unset': ["_id", 'category_num', 'user_num', 'user._id', 'user.password','category._id']
@@ -51,12 +51,12 @@ def my_place_post():
     category_num = request.form['category_num']
     user_num = request.form['user_num']
 
-    place_list = list(db.place.find({}, {'_id': False}))
+    place_list = list(db.place.find({}, {'_id': False}).sort('num'))
+
+    last_palce_num = place_list[-1]['num'] if len(place_list) > 0 else 1
 
     category = db.category.find_one({'num': int(category_num)}, {'_id': False})
     user = db.user.find_one({'num': int(user_num)}, {'_id': False})
 
-    count = len(place_list)
-
-    db.place.insert_one({"num": count + 1, "name": name, "content": content, 'img': img, 'category_num': category['num'], 'user_num': user['num'] })
+    db.place.insert_one({"num": last_palce_num + 1, "name": name, "content": content, 'img': img, 'category_num': category['num'], 'user_num': user['num'] })
     return jsonify({'msg': '등록 완료'})
