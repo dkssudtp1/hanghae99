@@ -10,7 +10,7 @@ def random_place_post():
 
     # 카테고리가 전체인지 아닌지 확인
     if category_receive == 0:
-        placeList = category_select();
+        placeList = list(db.place.find({}, {'_id': False}))
     else:
         placeList = list(db.place.find({"category_num": category_receive}, {'_id': False}))
 
