@@ -1,1 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>랜덤</title>
+    <style>
+        body {
+            background: #333;
+        }
 
+        h1#headerNames {
+            margin-top: 10%;
+            color: #fff;
+            font-family: Georgia, serif;
+            font-size: 150px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .button {
+            width: 150px;
+            margin: auto;
+            padding: 20px;
+            background: #1fa91f;
+            border: 3px solid #fff;
+            border-radius: 10px;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: block;
+            cursor: pointer;
+        }
+
+        #stopButton {
+            background: #ff0000;
+            display: none;
+        }
+
+        #timerWrapper {
+            margin: 50px 0;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            font-size: 50px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        #timerWrapper.visible {
+            opacity: 1;
+        }
+
+    </style>
+
+</head>
+<body>
+<h1 id="headerNames">?</h1>
+<button class="button" id="startButton" onclick="startAction()">start</button>
+<div class="button" id="stopButton">stop</div>
+<script>
+    const namesList = [
+        'Ivano',
+        'Lovro',
+        'Dominik',
+        'Vid',
+        'Roko',
+        'Luka',
+        'Niko'
+    ];
+
+    let i = 0;
+    let intervalHandle = null;
+
+    const startButton = document.getElementById('startButton');
+    const stopButton = document.getElementById('stopButton');
+    const headerOne = document.getElementById('headerNames');
+
+    startButton.addEventListener('click', function () {
+        this.style.display = "none";
+        stopButton.style.display = "block";
+        intervalHandle = setInterval(function () {
+            headerOne.textContent = namesList[i++ % namesList.length];
+        }, 50);
+    });
+    stopButton.addEventListener('click', function () {
+        this.style.display = "none";
+        startButton.style.display = "block";
+        clearInterval(intervalHandle);
+    });
+
+</script>
+</body>
+</html>
