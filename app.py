@@ -3,7 +3,7 @@ from user import sign_in, sign_up
 from my_place import my_place_list_get, my_place_post, my_place_delete
 from place import place_list_get
 from random_place import random_place_post
-from category import  category_post, category_delete, category_list_get
+from category import  category_post, category_delete, category_list_get, category_put
 
 app = Flask(__name__)
 
@@ -88,10 +88,15 @@ def category_list_get_api():
 def category_delete_api():
   return category_delete()
 
-# 장소 등록 api
+# 카테고리 등록 api
 @app.route('/api/category', methods=["POST"])
 def category_post_api():
   return category_post()
+
+# 카테고리 수정 api
+@app.route('/api/category', methods=["PUT"])
+def category_put_api():
+  return category_put()
 
 if __name__ == '__main__':
   app.run('0.0.0.0', port=5500, debug=True)
