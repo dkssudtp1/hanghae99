@@ -123,14 +123,27 @@
         <div class="header">
             <h1>뭐 먹지?</h1>
             <p>현재기온: <span id="temp">36</span>도</p>
+            <div>
+                <button onclick="food_suggest()" type="button" class="btn btn-light">로그아웃</button>
+                <button onclick="food_suggest()" type="button" class="btn btn-light">맛집목록</button>
+                <button onclick="food_suggest()" type="button" class="btn btn-light">등록하기</button>
+            </div>
+
         </div>
         <div class="mypost">
             <p id="category">카테고리
-                <select id="suggest-food-category" class="form-select form-select-lg mb-3" className="form-select">
-                    <option value="0" selected>전체</option>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">종류선택</label>
+                <select class="form-select" id="inputGroupSelect01">
+                    <option selected>-- 선택하기 --</option>
+                    <option value="1">한식</option>
+                    <option value="2">중식</option>
+                    <option value="3">일식</option>
                 </select>
+            </div>
             </p>
             <button onclick="food_suggest()" type="button" class="btn btn-dark">추천해줘</button>
+            <button onclick="food_suggest()" type="button" class="btn btn-dark"> 취소 </button>
         </div>
         <div class="mycards" id="comment-list"></div>
     </body>
