@@ -4,18 +4,9 @@ from db import db
 
 
 def my_place_list_get():
-    category_num = request.args.get('category_num')
-    user_num = request.args.get('user_num')
+    user_num = request.form('user_num')
 
     my_place_list = db.place.aggregate([
-        {
-            '$lookup': {
-                'from': "category",
-                'localField': "category_num",
-                'foreignField': "num",
-                'as': "category",
-            },
-        },
         {
             '$lookup': {
                 'from': "user",
@@ -25,10 +16,10 @@ def my_place_list_get():
             },
         },
         {
-            '$match': {'category.num': int(category_num), 'user.num': int(user_num)}
+            '$match': {'user.num': int(user_num)}
         },
         {
-            '$unset': ["_id", 'category_num', 'user_num', 'user._id', 'user.password','category._id']
+            '$unset': ["_id", 'user_num', 'user._id', 'user.password']
         }
     ])
 
