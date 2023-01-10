@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-       <meta property="og:image" content="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg"/>
+        <meta property="og:image" content="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg"/>
         <meta property="og:description" content="랜덤 픽"/>
         <meta property="og:title" content="뭐 먹지?"/>
 
@@ -65,7 +65,7 @@
         <script>
             $(document).ready(function () {
                 set_temp();
-                get_food_category();
+                get_category();
             });
 
             function set_temp() {
@@ -79,30 +79,44 @@
                 })
             }
 
-            function food_suggest() {
-                category = $("#suggest-food-category").val();
+            function suggest_place() {
+                category = $("#suggest-place-category").val();
+
                 $.ajax({
                     type: 'POST',
                     url: '/api/random_place',
                     data: {category_give : category},
                     success: function (response) {
-                        let row = response['food']
-                        let temp_html = `<div class="card">
-                                            <div class="card-body">
-                                                <p>${row.title}</p>
-                                                <blockquote class="blockquote mb-0">
-                                                    <footer class="blockquote-footer">${row.content}</footer>
-                                                </blockquote>
-                                            </div>
-                                         </div>`
+                        if(response === "null"){
+                            let temp_html = `<div class="card">
+                                                <div class="card-body">
+                                                    <blockquote class="blockquote mb-0">
+                                                        <footer class="blockquote-footer">맛집이 없습니다.</footer>
+                                                    </blockquote>
+                                                </div>
+                                             </div>`
+                            $('#comment-list').empty();
+                            $('#comment-list').append(temp_html);
+                        }
+                        else {
+                            let row = response['food']
+                            let temp_html = `<div class="card">
+                                                <div class="card-body">
+                                                    <p>${row.title}</p>
+                                                    <blockquote class="blockquote mb-0">
+                                                        <footer class="blockquote-footer">${row.content}</footer>
+                                                    </blockquote>
+                                                </div>
+                                             </div>`
 
-                        $('#comment-list').empty();
-                        $('#comment-list').append(temp_html);
+                            $('#comment-list').empty();
+                            $('#comment-list').append(temp_html);
+                        }
                     }
                 });
             }
 
-            function get_food_category() {
+            function get_category() {
                 $.ajax({
                     type: 'GET',
                     url: '/api/category',
@@ -112,7 +126,7 @@
 
                         for(let i = 0; i < rows.length; i++) {
                             let category = rows[i]
-                            $("#suggest-food-category").append(`<option value="${category.num}">${category.name}</option>`);
+                            $("#suggest-place-category").append(`<option value="${category.num}">${category.name}</option>`);
                         }
                     }
                 });
@@ -126,11 +140,11 @@
         </div>
         <div class="mypost">
             <p id="category">카테고리
-                <select id="suggest-food-category" class="form-select form-select-lg mb-3" className="form-select">
+                <select id="suggest-place-category" class="form-select form-select-lg mb-3" className="form-select">
                     <option value="0" selected>전체</option>
                 </select>
             </p>
-            <button onclick="food_suggest()" type="button" class="btn btn-dark">추천해줘</button>
+            <button onclick="suggest_place()" type="button" class="btn btn-dark">추천해줘</button>
         </div>
         <div class="mycards" id="comment-list"></div>
     </body>

@@ -12,6 +12,9 @@ def random_place_post():
     else:
         foodList = list(db.place.find({"category_num": category_receive}, {'_id': False}))
 
+    if foodList == []:
+        return "null"
+
     # 랜덤으로 리스트 중에서 선택
     random_food = random.choice(foodList)
 

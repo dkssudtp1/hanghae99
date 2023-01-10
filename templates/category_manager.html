@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+       <meta property="og:image" content="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg"/>
+        <meta property="og:description" content="랜덤 픽"/>
+        <meta property="og:title" content="뭐 먹지?"/>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                crossorigin="anonymous"></script>
+
+        <title>뭐 먹지?</title>
+
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+              rel="stylesheet">
+        <style>
+            * {
+                font-family: 'Noto Serif KR', serif;
+            }
+
+            .header {
+                width: 100%;
+                height: 300px;
+
+                background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg');
+                background-position: center 30%;
+                background-size: cover;
+
+                color: white;
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .mypost {
+                width: 95%;
+                max-width: 500px;
+                margin: 20px auto 20px auto;
+
+                box-shadow: 0px 0px 3px 0px black;
+                padding: 20px;
+            }
+
+            .mypost > button {
+                margin-top: 10px;
+            }
+
+            .mycards {
+                width: 95%;
+                max-width: 500px;
+                margin: auto;
+            }
+
+            table{
+                width: 500px;
+            }
+            td {
+                width: 100px;
+                height: 50px;
+                text-align: center;
+                vertical-align : middle;
+            }
+            .category_input_text{
+                width: 100px;
+                height: 50px;
+                text-align: center;
+                vertical-align : middle;
+            }
+
+        </style>
+        <script>
+            $(document).ready(function () {
+                set_temp();
+                get_category();
+            });
+
+            function set_temp() {
+                $.ajax({
+                    type: "GET",
+                    url: "http://spartacodingclub.shop/sparta_api/weather/seoul",
+                    data: {},
+                    success: function (response) {
+                        $('#temp').text(response['temp'])
+                    }
+                })
+            }
+
+
+            function get_category() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/category',
+                    data: {},
+                    success: function (response) {
+                        let rows = response['category_List'];
+
+                        for(let i = 0; i < rows.length; i++) {
+                            let category = rows[i];
+                            let tmphtml = `<tr id="${category.num}">
+                                                <td>${i+1}</td>
+                                                <td><input class="category_input_text" type="text" value="${category.name}"/></td>
+                                                <td>
+                                                    <button button type="button" class="btn btn-primary" onclick="modify_category(${category.num})">수정</button>
+                                                    <button button type="button" class="btn btn-danger" onclick="remove_category(${category.num})">삭제</button>
+                                                </td>
+                                           </tr>`
+                            $("#category-tbody").append(tmphtml);
+                        }
+                    }
+                });
+            }
+
+            function add_category(){
+                input_category = $("#input-category").val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/category',
+                    data: {category_name : input_category},
+                    success: function (response) {
+                        if(response === "duple")
+                            alert("중복값을 넣을수 없습니다.");
+                        if(response === "ok")
+                            location.reload();
+                    }
+                });
+            }
+
+            function remove_category(num){
+                var result = confirm("정말로 삭제합니까?");
+
+                if(result) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/api/category',
+                        data: {category_num: num},
+                        success: function (response) {
+                            if (response === "ok") {
+                                alert("삭제가 완료 되었습니다.");
+                                location.reload();
+                            }
+                            else{
+                                alert("삭제 도중 오류가 발생하였습니다");
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            }
+
+        </script>
+    </head>
+    <body>
+        <div class="header">
+            <h1>뭐 먹지?</h1>
+            <p>현재기온: <span id="temp">36</span>도</p>
+        </div>
+        <div class="mypost">
+            <h3>카테고리 관리</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td colspan="2">
+                            <input type="text" id="input-category" class="form-control" placeholder="카테고리 입력">
+                        </td>
+                        <td>
+                            <button button type="button" class="btn btn-success" onclick="add_category()">추가</button>
+                        </td>
+                    </tr>
+                    <tr style="height: 20px">
+                        <td>번호</td>
+                        <td>카테고리</td>
+                        <td>관리</td>
+                    </tr>
+                </thead>
+                <tbody id="category-tbody"></tbody>
+            </table>
+        </div>
+        <div class="mycards" id="comment-list"></div>
+    </body>
+</html>
