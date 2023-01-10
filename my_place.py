@@ -37,7 +37,7 @@ def my_place_delete():
 def my_place_post():
 
     content = request.form['content']
-    name = request.form['name']
+    title = request.form['title']
     img = request.form['img']
     category_num = request.form['category_num']
     user_num = request.form['user_num']
@@ -49,5 +49,5 @@ def my_place_post():
     category = db.category.find_one({'num': int(category_num)}, {'_id': False})
     user = db.user.find_one({'num': int(user_num)}, {'_id': False})
 
-    db.place.insert_one({"num": last_palce_num + 1, "name": name, "content": content, 'img': img, 'category_num': category['num'], 'user_num': user['num'] })
+    db.place.insert_one({"num": last_palce_num + 1, "title": title, "content": content, 'img': img, 'category_num': category['num'], 'user_num': user['num'] })
     return jsonify({'msg': '등록 완료'})
