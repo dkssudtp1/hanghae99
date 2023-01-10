@@ -125,9 +125,9 @@
             <p>현재기온: <span id="temp">36</span>도</p>
 
             <div>
-                <button onclick="food_suggest()" type="button" class="btn btn-light">로그아웃</button>
-                <button onclick="food_suggest()" type="button" class="btn btn-light">맛집목록</button>
-                <button onclick="food_suggest()" type="button" class="btn btn-light">추천하기</button>
+                <button onclick="location.href='sign_in.html'" type="button" class="btn btn-light">로그아웃</button>
+                <button onclick="location.href='index.html'" type="button" class="btn btn-light">맛집목록</button>
+                <button onclick="location.href='random_place.html'" type="button" class="btn btn-light">추천하기</button>
             </div>
 
         </div>
@@ -162,7 +162,7 @@
 
             </p>
 
-                        <label for="basic-url" class="form-label">맛집 주소 공유해줘!!</label>
+            <label for="basic-url" class="form-label">맛집 주소 공유해줘!!</label>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon3">url</span>
                 <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
@@ -171,7 +171,7 @@
             </p>
 
             <button onclick="food_suggest()" type="button" class="btn btn-dark">등록하기</button>
-            <button onclick="food_suggest()" type="button" class="btn btn-dark">취소</button>
+            <button onclick="location.href='index.html'" type="button" class="btn btn-dark">취소</button>
 
         </div>
         <div class="mycards" id="comment-list"></div>
