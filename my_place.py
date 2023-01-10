@@ -25,7 +25,7 @@ def my_place_list_get():
             },
         },
         {
-            '$match': {'category.num': int(category_num)}
+            '$match': {'category.num': int(category_num), 'user.num': int(user_num)}
         },
         {
             '$unset': ["_id", 'category_num', 'user_num', 'user._id', 'user.password','category._id']
