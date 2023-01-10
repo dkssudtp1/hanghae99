@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify
 from user import sign_in, sign_up
 from my_place import my_place_list_get, my_place_post, my_place_delete
 from random_place import random_place_get, random_place_post
+from category import  category_post, category_delete, category_list_get
 
 app = Flask(__name__)
 
@@ -43,7 +44,7 @@ def sign_in_api():
   return user
 
 # 내 장소 목록 api
-@app.route('/api/place', methods=["POST"])
+@app.route('/api/place', methods=["GET"])
 def my_place_list_get_api():
   place_list = my_place_list_get()
   return place_list
@@ -65,11 +66,31 @@ def my_place_post_api():
 def random_place_get_api():
   place = random_place_get()
   return place
+
 @app.route('/api/random_place', methods=["POST"])
 def random_place_post_api():
   place = random_place_post()
   return place
 
+
+# 카테고리 목록 api
+@app.route('/api/category', methods=["GET"])
+def category_list_get_api():
+  category_list = category_list_get()
+  print(category_list)
+  return category_list
+
+# 카테고리 삭제 api
+@app.route('/api/category', methods=["DELETE"])
+def category_delete_api():
+  msg = category_delete()
+  return msg
+
+# 장소 등록 api
+@app.route('/api/category', methods=["POST"])
+def category_post_api():
+  msg = category_post()
+  return msg
 
 if __name__ == '__main__':
   app.run('0.0.0.0', port=5500, debug=True)
