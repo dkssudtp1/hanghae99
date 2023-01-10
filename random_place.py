@@ -1,4 +1,6 @@
 import random
+
+from category import  category_select
 from flask import jsonify, request
 from db import db
 
@@ -8,14 +10,14 @@ def random_place_post():
 
     # 카테고리가 전체인지 아닌지 확인
     if category_receive == 0:
-        foodList = list(db.place.find({}, {'_id': False}))
+        placeList = category_select();
     else:
-        foodList = list(db.place.find({"category_num": category_receive}, {'_id': False}))
+        placeList = list(db.place.find({"category_num": category_receive}, {'_id': False}))
 
-    if foodList == []:
+    if placeList == []:
         return "null"
 
     # 랜덤으로 리스트 중에서 선택
-    random_food = random.choice(foodList)
+    random_place = random.choice(placeList)
 
-    return jsonify({'food': random_food})
+    return jsonify({'place': random_place})

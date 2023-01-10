@@ -105,9 +105,13 @@
 
                         for(let i = 0; i < rows.length; i++) {
                             let category = rows[i];
-                            let tmphtml = `<tr id="${category.num}">
-                                                <td>${i+1}</td>
-                                                <td><input class="category_input_text" type="text" value="${category.name}"/></td>
+                            let tmphtml = `<tr id="modify-category-${category.num}">
+                                                <td>
+                                                    ${i+1}
+                                                </td>
+                                                <td>
+                                                    <input class="category_input_text" type="text" value="${category.name}"/>
+                                                </td>
                                                 <td>
                                                     <button button type="button" class="btn btn-primary" onclick="modify_category(${category.num})">수정</button>
                                                     <button button type="button" class="btn btn-danger" onclick="remove_category(${category.num})">삭제</button>
@@ -131,6 +135,12 @@
                             alert("중복값을 넣을수 없습니다.");
                         if(response === "ok")
                             location.reload();
+
+                        if(response === "error")
+                        {
+                            alert("추가 도중 오류가 발생하였습니다");
+                            location.reload();
+                        }
                     }
                 });
             }
@@ -150,6 +160,34 @@
                             }
                             else{
                                 alert("삭제 도중 오류가 발생하였습니다");
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            }
+
+            function modify_category(num){
+                let modify_category = $("#modify-category-"+num).find('input').val();
+
+                var result = confirm("정말로 수정합니까?");
+                if(result){
+                    $.ajax({
+                        type: 'PUT',
+                        url: '/api/category',
+                        data: {category_num: num,
+                                category_name: modify_category
+                        },
+                        success: function (response) {
+                            if(response === "duple")
+                                alert("중복값이 있습니다.");
+
+                            if(response === "ok")
+                                location.reload();
+
+                            if(response === "error")
+                            {
+                                alert("수정 도중 오류가 발생하였습니다");
                                 location.reload();
                             }
                         }
