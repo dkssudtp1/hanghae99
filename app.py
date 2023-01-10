@@ -1,7 +1,7 @@
 from flask import Flask, render_template, jsonify
 from user import sign_in, sign_up
 from my_place import my_place_list_get, my_place_post, my_place_delete
-from random_place import random_place_get, random_place_post
+from random_place import random_place_post
 from category import  category_post, category_delete, category_list_get
 
 app = Flask(__name__)
@@ -62,11 +62,6 @@ def my_place_post_api():
   return msg
 
 # 랜덤 장소 조회 api
-@app.route('/api/random_place', methods=["GET"])
-def random_place_get_api():
-  place = random_place_get()
-  return place
-
 @app.route('/api/random_place', methods=["POST"])
 def random_place_post_api():
   place = random_place_post()

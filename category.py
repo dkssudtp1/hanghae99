@@ -4,8 +4,13 @@ from db import db
 
 
 def category_list_get():
+    #카테고리 가져오기
+    category_List = list(db.category.find({}, {'_id': False}))
 
-    return jsonify({'category_list': ''})
+    ##정렬 반대로 하기
+    category_List = list(reversed(category_List))
+
+    return jsonify({'category_List': category_List})
 
 def category_delete():
 

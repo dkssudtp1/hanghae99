@@ -105,7 +105,7 @@
             function get_food_category() {
                 $.ajax({
                     type: 'GET',
-                    url: '/api/random_place',
+                    url: '/api/category',
                     data: {},
                     success: function (response) {
                         let rows = response['category_List'];
