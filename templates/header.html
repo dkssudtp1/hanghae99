@@ -27,17 +27,18 @@
             if(url != "/")
                 tmpHTML += home_btn;
 
-            //로그인 안했을 때 로그인 버튼 + 회원가입 생성
+            //로그인 안했을 때 로그인 버튼 생성
             if(sessionId == "" && url != "/sign_in")
                 tmpHTML += sign_in_btn;
             else{
                 //로그인 일 경우 로그아웃버튼
                 if(sessionId != "")
+                {
                     tmpHTML += sign_out_btn;
-
-                //로그인도 했고 등록관리가 아닐경우
-                if(url != "/my_place")
-                    tmpHTML += my_place_btn;
+                    //로그인도 했고 맛집등록관리가 아닐경우 맛집등록 버튼 생성
+                    if(url != "/my_place" && sessionId)
+                        tmpHTML += my_place_btn;
+                }
             }
 
             // 관리자거나 카테고리 관리페이지가 아닐경우 카테고리 관리 버튼 생성

@@ -12,11 +12,6 @@ app.secret_key ="1234"
 def index():
   return render_template('index.html')
 
-# 헤더 html rendering
-@app.route('/header')
-def header_render():
-  return render_template('header.html')
-
 # 로그인 html rendering
 @app.route('/sign_in')
 def sign_in_render():
@@ -38,7 +33,7 @@ def my_place_render():
 
   return render_template('my_place.html')
 
-#카테고리 관리
+#카테고리 관리 html rendering
 @app.route('/category')
 def category_render():
   return render_template('category_manager.html')
