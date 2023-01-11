@@ -62,7 +62,7 @@
                     url: "/api/sign_in",
                     data: {id_give: id, password_give: password},
                     success: function (response) {
-                        if (response === "error") {
+                        if (response == "error") {
                             alert("아이디가 없거나 비밀번호가 틀립니다")
                         }
                         else
