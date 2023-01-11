@@ -41,7 +41,7 @@
                 justify-content: center;
             }
 
-            .mypost {
+            .update {
                 width: 95%;
                 max-width: 500px;
                 margin: 20px auto 20px auto;
@@ -60,68 +60,97 @@
                 margin: auto;
             }
 
+            .place_img{
+
+            }
+
 
         </style>
         <script>
             $(document).ready(function () {
-                set_temp();
-                get_food_category();
+            show_place();
             });
 
-            function set_temp() {
-                $.ajax({
-                    type: "GET",
-                    url: "http://spartacodingclub.shop/sparta_api/weather/seoul",
-                    data: {},
-                    success: function (response) {
-                        $('#temp').text(response['temp'])
-                    }
-                })
-            }
-
-
-            function get_food_category() {
+            function show_place() {
                 $.ajax({
                     type: 'GET',
-                    url: '/api/random_place',
-                    data: {},
+                    url: '/api/my_place',
+                    data: {user_num : 1 },
                     success: function (response) {
-                        let rows = response['category_List'];
+                        let rows = response['place_list'];
 
                         for(let i = 0; i < rows.length; i++) {
-                            let category = rows[i]
-                            $("#suggest-food-category").append(`<option value="${category.num}">${category.name}</option>`);
+                            let row= rows[i]
+                            let temp_html =`<tr>
+                                                <td>${row.title}</td>
+                                                <td>${row.content}</td>
+                                                <td><img style="width: 100px" src="${row.img}"/></td>
+                                                <td>
+                                                    <button button type="button" class="btn btn-danger" onclick="remove_myplace(${row.num})">삭제</button>
+                                                </td>
+                                            </tr>`
+
+
+                            $("#place_list").append(temp_html);
                         }
                     }
                 });
             }
+            function save_place() {
+                let name = $('#name').val()
+                let option = $('#option').val()
+                let url = $('#url').val()
+
+                $.ajax({
+                    type: "POST",
+                    url: '/api/my_place' ,
+                    data: { category_name:name, category_option:option, category_url:url},
+                    window:location.reload()
+
+                })
+            }
+            function remove_myplace(num){
+                var result = confirm("정말로 삭제합니까?");
+
+                if(result) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/api/my_place',
+                        data: {num: num},
+                        success: function (response) {
+                            if (response === "ok") {
+                                alert("삭제가 완료 되었습니다.");
+                                location.reload();
+                            }
+                            else{
+                                alert("삭제 도중 오류가 발생하였습니다");
+                                location.reload();
+                            }
+                        }
+                    });
+                }
+            }
+
         </script>
     </head>
     <body>
 
-    <header>{% include 'header.html' %}</header>
+        <header>{% include 'header.html' %}</header>
 
         <div class="update">
 
             <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                <textarea class="form-control" placeholder="Leave a comment here" id="name"></textarea>
                 <label for="floatingTextarea">맛집이름은 뭐지?</label>
             </div>
 
             </p>
 
-            <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                          style="height: 100px"></textarea>
-                <label for="floatingTextarea2">(선택) 뭐가 제일 맛있어?</label>
-            </div>
-
-            </p>
 
             <p id="category">어떤 종류인데?
             <div class="input-group mb-3">
                 <label class="input-group-text" for="inputGroupSelect01">종류</label>
-                <select class="form-select" id="inputGroupSelect01">
+                <select class="form-select" id="option">
                     <option selected>-- 선택하기 --</option>
                     <option value="1">한식</option>
                     <option value="2">중식</option>
@@ -130,26 +159,37 @@
                     <option value="5">택국음식</option>
                     <option value="5">인도음식</option>
 
-
                 </select>
+
             </div>
 
             </p>
 
             <label for="basic-url" class="form-label">맛집 주소 공유해줘!!</label>
             <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon3">url</span>
+                <span class="input-group-text" id="img">url</span>
                 <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
             </div>
 
             </p>
 
-            <button onclick="food_suggest()" type="button" class="btn btn-dark">등록하기</button>
+            <button onclick="save_place()" type="button" class="btn btn-dark">등록하기</button>
             <button onclick="location.href='index.html'" type="button" class="btn btn-dark">취소</button>
 
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">맛집명</th>
+                    <th scope="col">종류</th>
+                    <th scope="col">링크</th>
+                </tr>
+                </thead>
+
+                <tbody id="place_list">
+
+                </tbody>
+            </table>
         </div>
-
-        <div class="mycards" id="comment-list"></div>
-
     </body>
 </html>
