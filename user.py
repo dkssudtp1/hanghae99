@@ -9,14 +9,14 @@ def sign_in():
     user = db.users.find_one({'id':id_receive})
 
     if user is None:
-        return jsonify({'msg': '아이디가 없거나 비밀번호가 틀립니다'})
+        return "error"
     else :
 
         if user['password'] == password_receive :
             return jsonify({'user': user})
 
         else :
-            return jsonify({'msg': '아이디가 없거나 비밀번호가 틀립니다'})
+            return "error"
 
 #회원가입
 def sign_up():
