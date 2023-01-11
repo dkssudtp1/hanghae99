@@ -18,12 +18,7 @@
 
         <title>오늘은 뭐 먹지?</title>
 
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
-              rel="stylesheet">
         <style>
-            * {
-                font-family: 'Noto Serif KR', serif;
-            }
 
             .header {
                 width: 100%;
@@ -73,9 +68,9 @@
                         else
                         {
                             let user = response['user']
-                            sessionStorage.setItem('user', user['num'])
+                            sessionStorage.setItem('user_num', user['num'])
                             sessionStorage.setItem('is_admin', user['admin'])
-                            window.location.href = "/random_place"
+                            window.location.href = "/"
                         }
                     }
                 })
@@ -102,7 +97,7 @@
             </p>
 
             <button onclick=sign_in() type="button" class="btn btn-dark">로그인</button>
-            <button onclick="location.href='sign_up.html'" type="button" class="btn btn-dark">회원가입</button>
+            <button onclick="location.href='sign_up'" type="button" class="btn btn-dark">회원가입</button>
         </div>
 
     </body>

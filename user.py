@@ -6,12 +6,11 @@ def sign_in():
     id_receive = request.form['id_give']
     password_receive = request.form['password_give']
 
-    user = db.users.find_one({'id':id_receive})
+    user = db.users.find_one({'id':id_receive}, {'_id': False})
 
     if user is None:
         return "error"
     else :
-
         if user['password'] == password_receive :
             return jsonify({'user': user})
 

@@ -35,8 +35,13 @@ def random_place_render():
 # 내장소 관리 html rendering
 @app.route('/my_place')
 def my_place_render():
-
   return render_template('my_place.html')
+
+
+# 내장소 관리 html rendering
+@app.route('/add_my_place')
+def my_place2_render():
+  return render_template('add_my_place.html')
 
 #카테고리 관리
 @app.route('/category')
@@ -50,7 +55,7 @@ def sign_up_api():
   return msg
 
 # 회원가입 api
-@app.route('/api/sign_in', methods=["GET"])
+@app.route('/api/sign_in', methods=["POST"])
 def sign_in_api():
   user = sign_in()
   return user
