@@ -50,7 +50,7 @@ def sign_up_api():
   return msg
 
 # 회원가입 api
-@app.route('/api/sign_in', methods=["GET"])
+@app.route('/api/sign_in', methods=["POST"])
 def sign_in_api():
   user = sign_in()
   return user
