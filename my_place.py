@@ -5,41 +5,45 @@ from db import db
 def my_place_list_get():
     user_num = request.args.get('user_num')
 
-    my_place_list = db.place.aggregate([
-        {
-            # sql의 join기능을 수행
-            '$lookup': {
-                'from': "user",
-                'localField': "user.num",
-                'foreignField': "place.user_num",
-                'as': "user",
-            },
-        },
-        {
-            # array -> object map으로 변환시켜준다
-            '$unwind': {'path':'$user'}
-        },
-        {
-            # 요청한 user의 번호를 기준삼아 진행한다
-            '$match': {'user.num': int(user_num)}
-        },
-        {
-            # 노출시키지 않을 컬럼을 제거시켜준다
-            '$unset': ["_id", 'user_num', 'user._id', 'user.password']
-        },
-    ])
+    my_place_list = db.place.find({'user_num': int(user_num)}, {'_id': False})
 
+    # my_place_list = db.place.aggregate([
+    #     {
+    #         # sql의 join기능을 수행
+    #         '$lookup': {
+    #             'from': "user",
+    #             'localField': "user.num",
+    #             'foreignField': "place.user_num",
+    #             'as': "user",
+    #         },
+    #     },
+    #     {
+    #         # array -> object map으로 변환시켜준다
+    #         '$unwind': {'path':'$user'}
+    #     },
+    #     {
+    #         # 요청한 user의 번호를 기준삼아 진행한다
+    #         '$match': {'user.num': int(user_num)}
+    #     },
+    #     {
+    #         # 노출시키지 않을 컬럼을 제거시켜준다
+    #         '$unset': ["_id", 'user_num', 'user._id', 'user.password']
+    #     },
+    # ])
+    #
     json = jsonify({'place_list': list(my_place_list)})
 
     return json
 
 
 def my_place_delete():
-    num = request.form('num')
+    num = request.form['num']
 
-    db.place.delete_one({'num': int(num)})
-
-    return jsonify({'msg': '삭제 완료'})
+    try:
+        db.place.delete_one({"num": int(num)})
+        return "ok"
+    except:
+        return "error"
 
 
 def my_place_post():
