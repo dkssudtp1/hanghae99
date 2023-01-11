@@ -12,7 +12,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap" rel="stylesheet">
@@ -118,16 +117,9 @@
 
 </head>
 <body>
-<div class="header", id="header_temp">
-    <h1>뭐 먹지?</h1>
-    <div>
-        <button onclick="location.href='sign_in.html'" type="button" class="btn btn-light">로그아웃</button>
-        <button onclick="location.href='my_place.html'" type="button" class="btn btn-light">등록하기</button>
-    </div>
-
-</div>
+<header>{% include 'header.html' %}</header>
 <div class="mypost">
-    <p id="category">카테고리
+    <p id="category">카테고리{{ session['id']}}
         <select id="suggest-place-category" class="form-select form-select-lg mb-3" className="form-select">
             <option value="0" selected>전체</option>
         </select>

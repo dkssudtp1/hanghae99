@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, session
 from user import sign_in, sign_up
 from my_place import my_place_list_get, my_place_post, my_place_delete
 from place import place_list_get
@@ -6,11 +6,16 @@ from random_place import random_place_post
 from category import  category_post, category_delete, category_list_get, category_put
 
 app = Flask(__name__)
+app.secret_key ="1234"
 
 @app.route('/')
 def index():
-  print('1111')
   return render_template('index.html')
+
+# 헤더 html rendering
+@app.route('/header')
+def header_render():
+  return render_template('header.html')
 
 # 로그인 html rendering
 @app.route('/sign_in')

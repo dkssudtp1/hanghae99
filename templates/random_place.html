@@ -134,15 +134,7 @@
         </script>
     </head>
     <body>
-        <div class="header">
-            <h1>뭐 먹지?</h1>
-            <p>현재기온: <span id="temp">36</span>도</p>
-            <div>
-                <button onclick="location.href='sign_in.html'" type="button" class="btn btn-light">로그아웃</button>
-                <button onclick="location.href='my_place.html'" type="button" class="btn btn-light">등록하기</button>
-            </div>
-
-        </div>
+        <header>{% include 'header.html' %}</header>
         <div class="mypost">
             <p id="category">카테고리
                 <select id="suggest-place-category" class="form-select form-select-lg mb-3" className="form-select">

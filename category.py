@@ -73,8 +73,11 @@ def category_max_num():
 
     #카테고리 내림차순으로 정렬 후 하나 가져오기
     max_num_list = list(db.category.find({}, {'_id': False}).sort("num",-1).limit(1))
+    if(max_num_list == []):
+        return 0
+    else:
+        return int(max_num_list[0]['num'])
 
-    return int(max_num_list[0]['num'])
 
 def category_duple_check(input_category):
 

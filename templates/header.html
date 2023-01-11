@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+        $(document).ready(function () {
+            make_button();
+        });
+        function make_button(){
+            //버튼 분리
+            const home_btn = `<button onclick="location.href='/'" type="button" class="btn btn-light">홈으로</button>`;
+            const sign_in_btn = `<button onclick="location.href='/sign_in'" type="button" class="btn btn-light">로그인</button>`;
+            const sign_out_btn = `<button onclick="location.href='/sign_out'" type="button" class="btn btn-light">로그아웃</button>`;
+            const my_place_btn = `<button onclick="location.href='/my_place'" type="button" class="btn btn-light">맛집 등록</button>`;
+            const category_manager_btn = `<button onclick="location.href='/category'" type="button" class="btn btn-light">카테고리 관리</button>`;
+
+            let sessionId = "";
+            sessionId =  "{{session['id']}}";
+            let sessionNum = "{{session['num']}}";
+            url = window.location.pathname;
+
+            let tmpHTML = "";
+            //홈이 아닐시 홈으로 버튼 생성
+            if(url != "/")
+                tmpHTML += home_btn;
+
+            //로그인 안했을 때 로그인 버튼 + 회원가입 생성
+            if(sessionId == "" && url != "/sign_in")
+                tmpHTML += sign_in_btn;
+            else{
+                //로그인 일 경우 로그아웃버튼
+                if(sessionId != "")
+                    tmpHTML += sign_out_btn;
+
+                //로그인도 했고 등록관리가 아닐경우
+                if(url != "/my_place")
+                    tmpHTML += my_place_btn;
+            }
+
+            // 관리자거나 카테고리 관리페이지가 아닐경우 카테고리 관리 버튼 생성
+            if(sessionId == "admin" && sessionNum == 99 && url != "/category")
+                tmpHTML += category_manager_btn;
+
+
+            $('#header-button').empty();
+            $('#header-button').append(tmpHTML);
+        }
+
+    </script>
+
+</head>
+<body>
+    <div class="header", id="header_temp">
+        <h1>뭐 먹지?</h1>
+        <div id="header-button">
+        </div>
+    </div>
+</body>
+</html>

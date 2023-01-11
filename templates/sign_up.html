@@ -76,11 +76,7 @@
 
     </head>
     <body>
-        <div class="header">
-            <h1>오늘은 뭐 먹지?</h1>
-            <p>현재기온: <span id="temp">36</span>도</p>
-        </div>
-
+        <header>{% include 'header.html' %}</header>
         <div class="mypost">
             <h2> 회원가입 </h2>
 
@@ -103,10 +99,8 @@
                 <label for="password">비밀번호</label>
             </div>
 
-
             <button onclick=sign_up() type="button" class="btn btn-dark">완료</button>
-            <button onclick="location.href='sign_in.html'" type="button" class="btn btn-dark">취소</button>
-
+            <button onclick="location.href='sign_in'" type="button" class="btn btn-dark">취소</button>
         </div>
 
     </body>
