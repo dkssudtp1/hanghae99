@@ -37,12 +37,6 @@ def random_place_render():
 def my_place_render():
   return render_template('my_place.html')
 
-
-# 내장소 관리 html rendering
-@app.route('/add_my_place')
-def my_place2_render():
-  return render_template('add_my_place.html')
-
 #카테고리 관리
 @app.route('/category')
 def category_render():
