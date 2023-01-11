@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta property="og:image" content="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg"/>
@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Yeon+Sung&display=swap" rel="stylesheet">
 
-    <title>랜덤</title>
+    <title>뭐 먹지?</title>
     <style>
         * {
             font-family: 'Yeon Sung', cursive;
@@ -115,17 +115,8 @@
         }
 
     </style>
-
 </head>
 <body>
-<div class="header", id="header_temp">
-    <h1>뭐 먹지?</h1>
-    <div>
-        <button onclick="location.href='sign_in.html'" type="button" class="btn btn-light">로그아웃</button>
-        <button onclick="location.href='my_place.html'" type="button" class="btn btn-light">등록하기</button>
-    </div>
-
-</div>
 <div class="mypost">
     <p id="category">카테고리
         <select id="suggest-place-category" class="form-select form-select-lg mb-3" className="form-select">
@@ -141,19 +132,19 @@
 <div class="button" id="stopButton">stop</div>
 <script>
 
-    window.onload = function() {
-        getCategory()
-    }
-
     let i = 0;
     let intervalHandle = null;
 
     let selectedPlace = null
 
+    let user_num = sessionStorage.getItem('user_num')
+    let is_admin = sessionStorage.getItem('is_admin')
+
     const startButton = document.getElementById('startButton');
     const stopButton = document.getElementById('stopButton');
     const headerTitle = document.getElementById('headerTitle');
     const headerContent = document.getElementById('headerContent');
+
 
     startButton.addEventListener('click', function () {
         let category_num = $('#suggest-place-category').val()
@@ -211,6 +202,11 @@
             }
         });
     }
+
+    window.addEventListener('load', function () {
+        getCategory()
+    });
+
 
 </script>
 </body>

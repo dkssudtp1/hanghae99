@@ -9,7 +9,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-  print('1111')
   return render_template('index.html')
 
 # 로그인 html rendering
@@ -30,6 +29,7 @@ def random_place_render():
 # 내장소 관리 html rendering
 @app.route('/my_place')
 def my_place_render():
+
   return render_template('my_place.html')
 
 #카테고리 관리
