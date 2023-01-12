@@ -85,7 +85,9 @@
                     }
                 })
             }
+
         </script>
+
     </head>
     <body>
         <header>{% include 'header.html' %}</header>
@@ -107,13 +109,14 @@
             <button onclick=sign_in() type="button" class="btn btn-dark">로그인</button>
             <button onclick="location.href='sign_up'" type="button" class="btn btn-dark">회원가입</button>
         </div>
-        <script>
-            $('#password').keypress(function (e) {
-                if (e.keyCode === 13) {
-                    sign_in();
-                }
-            });
-        </script>
+
     </body>
 
+    <script>
+        $('#password').keypress(function (e) {
+            if (e.keyCode == 13) {
+                sign_in()
+            }
+        })
+    </script>
 </html>
