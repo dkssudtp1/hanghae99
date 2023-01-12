@@ -67,9 +67,6 @@
 
     </style>
     <script>
-        let sessionAdmin = sessionStorage.getItem('is_admin');
-        let sessionNum = sessionStorage.getItem('user_num');
-
         $(document).ready(function () {
             login_check();
             get_food_category();
@@ -223,6 +220,7 @@
             <th scope="col">맛집명</th>
             <th scope="col">종류</th>
             <th scope="col">링크</th>
+            <th scope="col">관리</th>
         </tr>
         </thead>
 

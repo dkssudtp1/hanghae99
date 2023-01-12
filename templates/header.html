@@ -18,10 +18,21 @@
         }
     </style>
     <script>
+        let sessionAdmin = sessionStorage.getItem('is_admin');
+        let sessionNum = sessionStorage.getItem('user_num');
+        let sessionNick = sessionStorage.getItem('user_nickname');
 
         $(document).ready(function () {
             make_button();
+            header_nick_change();
         });
+
+        function header_nick_change(){
+            if(sessionNick == null)
+                sessionNick = "Guest"
+            $("#header-nickname").empty();
+            $("#header-nickname").append(`${sessionNick}의 뭐 먹지?`);
+        }
 
         function make_button() {
             //버튼 분리
@@ -31,8 +42,6 @@
             const my_place_btn = `<button onclick="location.href='/my_place'" type="button" class="btn btn-light">맛집 등록</button>`;
             const category_manager_btn = `<button onclick="location.href='/category'" type="button" class="btn btn-light">카테고리 관리</button>`;
 
-            let sessionAdmin = sessionStorage.getItem('is_admin');
-            let sessionNum = sessionStorage.getItem('user_num');
             let url = window.location.pathname;
 
             let tmpHTML = "";
@@ -76,7 +85,7 @@
 </head>
 <body>
 <div class="header" , id="header_temp">
-    <h1>뭐 먹지?</h1>
+    <h1 id="header-nickname">뭐 먹지?</h1>
     <div id="header-button">
     </div>
 </div>

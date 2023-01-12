@@ -69,6 +69,7 @@
                         {
                             let user = response['user']
                             sessionStorage.setItem('user_num', user['num'])
+                            sessionStorage.setItem('user_nickname', user['nickname'])
                             sessionStorage.setItem('is_admin', user['admin'])
                             window.location.href = "/"
                         }
