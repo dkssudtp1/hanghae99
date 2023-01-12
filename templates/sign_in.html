@@ -76,6 +76,9 @@
                 })
             }
 
+
+            
+
         </script>
 
     </head>
@@ -101,4 +104,12 @@
         </div>
 
     </body>
+
+    <script>
+        $('#password').keypress(function (e) {
+            if (e.keyCode == 13) {
+                sign_in()
+            }
+        })
+    </script>
 </html>
