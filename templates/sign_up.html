@@ -77,8 +77,13 @@
                     url: "/api/sign_up",
                     data: {id_give: id, password_give: password, nickname_give: nickname},
                     success: function (response) {
-                        alert(response["msg"])
-                        window.location.href = 'sign_in'
+                        if (response == "error") {
+                            alert("이미 존재하는 아이디입니다")
+                        } else {
+                            alert(response["msg"])
+                            window.location.href = 'sign_in'
+                        }
+
                     }
                 });
             }
