@@ -67,10 +67,21 @@
 
     </style>
     <script>
+        let sessionAdmin = sessionStorage.getItem('is_admin');
+        let sessionNum = sessionStorage.getItem('user_num');
+
         $(document).ready(function () {
+            login_check();
             get_food_category();
             show_place();
         });
+
+        function login_check(){
+            if(sessionNum == null){
+                alert("로그인을 해주세요");
+                location.href = "/";
+            }
+        }
 
         function show_place() {
 

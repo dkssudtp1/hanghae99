@@ -58,22 +58,21 @@
 
         <script>
             function sign_up() {
-            let id = $('#idname').val()
-            let password = $('#password').val()
-            let nickname = $('#nickname').val()
+                let id = $('#idname').val()
+                let password = $('#password').val()
+                let nickname = $('#nickname').val()
 
-            $.ajax({
-                type: "POST",
-                url: "/api/sign_up",
-                data: {id_give:id, password_give:password, nickname_give:nickname},
-                success: function (response) {
-                    alert(response["msg"])
-                    window.location.href='sign_in'
-                }
-            });
+                $.ajax({
+                    type: "POST",
+                    url: "/api/sign_up",
+                    data: {id_give:id, password_give:password, nickname_give:nickname},
+                    success: function (response) {
+                        alert(response["msg"])
+                        window.location.href='sign_in'
+                    }
+                });
         }
         </script>
-
     </head>
     <body>
         <header>{% include 'header.html' %}</header>

@@ -78,10 +78,22 @@
 
         </style>
         <script>
+            let sessionAdmin = sessionStorage.getItem('is_admin');
+            let sessionNum = sessionStorage.getItem('user_num');
+            console.log(sessionAdmin);
+
             $(document).ready(function () {
+                admin_check();
                 set_temp();
                 get_category();
             });
+
+            function admin_check(){
+                if(!(sessionAdmin == 'true')){
+                    alert("관리자만 들어올수 있습니다.");
+                    location.href = "/";
+                }
+            }
 
             function set_temp() {
                 $.ajax({
