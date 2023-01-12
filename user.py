@@ -26,7 +26,7 @@ def sign_up():
     existing_id = db.users.find_one({'id': id_receive})
 
     if existing_id is not None:
-        return jsonify({'msg': '이미 존재하는 ID입니다'})
+        return "error"
     else:
 
         user_list = list(db.users.find({}, {'_id': False}).sort('num'))
