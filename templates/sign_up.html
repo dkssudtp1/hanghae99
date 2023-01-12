@@ -57,21 +57,39 @@
         </style>
 
         <script>
-            function sign_up() {
-            let id = $('#idname').val()
-            let password = $('#password').val()
-            let nickname = $('#nickname').val()
-
-            $.ajax({
-                type: "POST",
-                url: "/api/sign_up",
-                data: {id_give:id, password_give:password, nickname_give:nickname},
-                success: function (response) {
-                    alert(response["msg"])
-                    window.location.href='sign_in'
-                }
+            $(document).ready(function () {
+                login_check();
             });
-        }
+
+            function login_check() {
+                if (sessionStorage.getItem('user_num') != null) {
+                    window.location.href = "/"
+                }
+            }
+
+            function sign_up() {
+                let id = $('#idname').val()
+                let password = $('#password').val()
+                let nickname = $('#nickname').val()
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/sign_up",
+                    data: {id_give: id, password_give: password, nickname_give: nickname},
+                    success: function (response) {
+                        alert(response["msg"])
+                        window.location.href = 'sign_in'
+                    }
+                });
+            }
+
+            $(function () {
+                $("#password").on("keyup", function (e) {
+                    if (e.keyCode === 13) {
+                        $("#loginbtn").trigger('click');
+                    }
+                });
+            });
         </script>
 
     </head>
@@ -88,18 +106,18 @@
             </p>
             </div>
             <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="idname"></textarea>
+                <textarea class="form-control" placeholder=" " id="idname"></textarea>
                 <label for="idname">아이디</label>
             </div>
 
             </p>
 
             <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="password"></textarea>
+                <input type="password" class="form-control" placeholder=" " id="password">
                 <label for="password">비밀번호</label>
             </div>
 
-            <button onclick=sign_up() type="button" class="btn btn-dark">완료</button>
+            <button onclick=sign_up() id="loginbtn" type="button" class="btn btn-dark">완료</button>
             <button onclick="location.href='sign_in'" type="button" class="btn btn-dark">취소</button>
         </div>
 

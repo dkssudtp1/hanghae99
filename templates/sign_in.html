@@ -53,6 +53,15 @@
         </style>
 
         <script>
+            $(document).ready(function () {
+                login_check();
+            });
+
+            function login_check() {
+                if (sessionStorage.getItem('user_num') != null) {
+                    window.location.href = "/"
+                }
+            }
             function sign_in() {
                 let id = $('#idname').val()
                 let password = $('#password').val()
@@ -76,6 +85,14 @@
                 })
             }
 
+            $(function () {
+                $("#password").on("keyup", function (e) {
+                    if (e.keyCode === 13) {
+                        $("#loginbtn").trigger('click');
+                    }
+                });
+            });
+
         </script>
 
     </head>
@@ -96,7 +113,7 @@
 
             </p>
 
-            <button onclick=sign_in() type="button" class="btn btn-dark">로그인</button>
+            <button onclick=sign_in() id="loginbtn" type="button" class="btn btn-dark">로그인</button>
             <button onclick="location.href='sign_up'" type="button" class="btn btn-dark">회원가입</button>
         </div>
 
