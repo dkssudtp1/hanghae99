@@ -6,7 +6,6 @@ from random_place import random_place_post
 from category import  category_post, category_delete, category_list_get, category_put
 
 app = Flask(__name__)
-app.secret_key ="1234"
 
 @app.route('/')
 def index():
